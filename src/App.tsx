@@ -2,23 +2,23 @@ import React, { ChangeEvent, useState } from 'react'
 import './App.css'
 import TodoItem from './components/TodoItem'
 import NewTodoForm from './components/NewTodoForm'
-
-type Todo = {
-  id: string
-  number: string
-  completed: boolean
-}
+import { Todo } from './types'
 
 function App() {
   const [text, setText] = useState('')
-  const [todos, setTodos] = useState<string[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value)
   }
 
   const addTodo = () => {
-    setTodos([text, ...todos])
+    const newTodo = {
+      id: new Date().toString(),
+      title: text,
+      completed: false,
+    }
+    setTodos([newTodo, ...todos])
     setText('')
   }
 
