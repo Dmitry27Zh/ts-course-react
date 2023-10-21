@@ -3,6 +3,7 @@ import './App.css'
 import NewTodoForm from './components/NewTodoForm'
 import { Todo, TodoChange } from './types'
 import TodoList from './components/TodoList'
+import Counter from './components/Counter'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -39,6 +40,7 @@ function App() {
     <div className="App">
       <NewTodoForm handleClick={addTodo} />
       <TodoList todos={todos} onChange={onChange} onRemove={onRemove} />
+      <Counter title="counter" />
     </div>
   )
 }
