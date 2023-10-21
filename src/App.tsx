@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
-import TodoItem from './components/TodoItem'
 import NewTodoForm from './components/NewTodoForm'
-import { Todo } from './types'
+import { Todo, TodoChange } from './types'
+import TodoList from './components/TodoList'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -20,11 +20,25 @@ function App() {
     }
     setTodos([newTodo, ...todos])
   }
+  const onChange = (id: Todo['id'], change: TodoChange) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        todo = { ...todo, ...change }
+      }
+
+      return todo
+    })
+    setTodos(newTodos)
+  }
+  const onRemove = (id: Todo['id']) => {
+    const newTodos = todos.filter((todo) => todo.id !== id)
+    setTodos(newTodos)
+  }
 
   return (
     <div className="App">
       <NewTodoForm handleClick={addTodo} />
-      <TodoItem id="112" title="first todo" completed={false} />
+      <TodoList todos={todos} onChange={onChange} onRemove={onRemove} />
     </div>
   )
 }
